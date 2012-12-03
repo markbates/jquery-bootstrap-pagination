@@ -8,6 +8,9 @@
         total_pages: 1
         next: "&gt;"
         prev: "&lt;"
+        display_max: 8
+        first: false
+        last: false
       @settings = $.extend(defaults, options)
       # console?.log """@settings""", @settings
       $("a", @el).live "click", @clicked
@@ -31,23 +34,25 @@
       total_pages = @settings.total_pages
       current_page = @settings.current_page
       pages = []
+      max = @settings.display_max
       if total_pages > 10
         pages.push 1
-        pages.push ".." if current_page > 7
+        pages.push ".." if current_page > max - 1
         if current_page is total_pages
-          pages.push page for page in [(total_pages - 8)..total_pages]
-        if total_pages - current_page < 7
-          pages.push page for page in [(total_pages - 8)..total_pages]
-        else if current_page > 7
-          pages.push page for page in [(current_page - 4)..(current_page + 4)]
-        else if current_page <= 7
-          pages.push page for page in [2..8]
+          pages.push page for page in [(total_pages - max)..total_pages]
+        if total_pages - current_page < max - 1
+          pages.push page for page in [(total_pages - max)..total_pages]
+        else if current_page > max - 1
+          buf = max / 2
+          pages.push page for page in [(current_page - buf)..(current_page + buf)]
+        else if current_page <= max - 1
+          pages.push page for page in [2..max]
 
         # make sure they're all unique pages:
         pages = $.grep pages, (v, k) ->
           return $.inArray(v ,pages) is k
         unless total_pages in pages
-          pages.push ".." unless (total_pages - current_page) < 7
+          pages.push ".." unless (total_pages - current_page) < max - 1
           pages.push total_pages
       else
         pages.push page for page in [1..total_pages]

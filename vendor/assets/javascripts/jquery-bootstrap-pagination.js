@@ -23,7 +23,10 @@
           current_page: 1,
           total_pages: 1,
           next: "&gt;",
-          prev: "&lt;"
+          prev: "&lt;",
+          display_max: 8,
+          first: false,
+          last: false
         };
         this.settings = $.extend(defaults, options);
         $("a", this.el).live("click", this.clicked);
@@ -56,30 +59,32 @@
       };
 
       PaginationView.prototype.pages = function() {
-        var current_page, page, pages, total_pages, _i, _j, _k, _l, _m, _ref, _ref1, _ref2, _ref3;
+        var buf, current_page, max, page, pages, total_pages, _i, _j, _k, _l, _m, _ref, _ref1, _ref2, _ref3;
         total_pages = this.settings.total_pages;
         current_page = this.settings.current_page;
         pages = [];
+        max = this.settings.display_max;
         if (total_pages > 10) {
           pages.push(1);
-          if (current_page > 7) {
+          if (current_page > max - 1) {
             pages.push("..");
           }
           if (current_page === total_pages) {
-            for (page = _i = _ref = total_pages - 8; _ref <= total_pages ? _i <= total_pages : _i >= total_pages; page = _ref <= total_pages ? ++_i : --_i) {
+            for (page = _i = _ref = total_pages - max; _ref <= total_pages ? _i <= total_pages : _i >= total_pages; page = _ref <= total_pages ? ++_i : --_i) {
               pages.push(page);
             }
           }
-          if (total_pages - current_page < 7) {
-            for (page = _j = _ref1 = total_pages - 8; _ref1 <= total_pages ? _j <= total_pages : _j >= total_pages; page = _ref1 <= total_pages ? ++_j : --_j) {
+          if (total_pages - current_page < max - 1) {
+            for (page = _j = _ref1 = total_pages - max; _ref1 <= total_pages ? _j <= total_pages : _j >= total_pages; page = _ref1 <= total_pages ? ++_j : --_j) {
               pages.push(page);
             }
-          } else if (current_page > 7) {
-            for (page = _k = _ref2 = current_page - 4, _ref3 = current_page + 4; _ref2 <= _ref3 ? _k <= _ref3 : _k >= _ref3; page = _ref2 <= _ref3 ? ++_k : --_k) {
+          } else if (current_page > max - 1) {
+            buf = max / 2;
+            for (page = _k = _ref2 = current_page - buf, _ref3 = current_page + buf; _ref2 <= _ref3 ? _k <= _ref3 : _k >= _ref3; page = _ref2 <= _ref3 ? ++_k : --_k) {
               pages.push(page);
             }
-          } else if (current_page <= 7) {
-            for (page = _l = 2; _l <= 8; page = ++_l) {
+          } else if (current_page <= max - 1) {
+            for (page = _l = 2; 2 <= max ? _l <= max : _l >= max; page = 2 <= max ? ++_l : --_l) {
               pages.push(page);
             }
           }
@@ -87,7 +92,7 @@
             return $.inArray(v, pages) === k;
           });
           if (__indexOf.call(pages, total_pages) < 0) {
-            if (!((total_pages - current_page) < 7)) {
+            if (!((total_pages - current_page) < max - 1)) {
               pages.push("..");
             }
             pages.push(total_pages);
@@ -102,7 +107,7 @@
 
       PaginationView.prototype.render = function() {
         var html, link, _i, _len, _ref;
-        html = ["<div class='pagination'>"];
+        html = ["<div class='jquery-bootstrap-pagination'>"];
         html.push("<ul>");
         _ref = this.buildLinks();
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {

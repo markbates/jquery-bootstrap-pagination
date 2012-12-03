@@ -30,6 +30,27 @@ describe "pagination", ->
       expect(links[8]).toEqual("<li><a href='#' data-page='..'>..</a></li>")
       expect(links[9]).toEqual("<li><a href='#' data-page='50'>50</a></li>")
 
+    it "shows a max number of links", ->
+      @view.settings.total_pages = 50
+      @view.settings.current_page = 2
+      @view.settings.display_max = 12
+      links = @view.buildLinks()
+      expect(links.length).toEqual(14)
+      expect(links[0]).toEqual("<li><a href='#' data-page='1'>1</a></li>")
+      expect(links[1]).toEqual("<li><a href='#' data-page='2'>2</a></li>")
+      expect(links[2]).toEqual("<li><a href='#' data-page='3'>3</a></li>")
+      expect(links[3]).toEqual("<li><a href='#' data-page='4'>4</a></li>")
+      expect(links[4]).toEqual("<li><a href='#' data-page='5'>5</a></li>")
+      expect(links[5]).toEqual("<li><a href='#' data-page='6'>6</a></li>")
+      expect(links[6]).toEqual("<li><a href='#' data-page='7'>7</a></li>")
+      expect(links[7]).toEqual("<li><a href='#' data-page='8'>8</a></li>")
+      expect(links[8]).toEqual("<li><a href='#' data-page='9'>9</a></li>")
+      expect(links[9]).toEqual("<li><a href='#' data-page='10'>10</a></li>")
+      expect(links[10]).toEqual("<li><a href='#' data-page='11'>11</a></li>")
+      expect(links[11]).toEqual("<li><a href='#' data-page='12'>12</a></li>")
+      expect(links[12]).toEqual("<li><a href='#' data-page='..'>..</a></li>")
+      expect(links[13]).toEqual("<li><a href='#' data-page='50'>50</a></li>")
+
     it "shows next if there are next pages", ->
       @view.settings.next = "next"
       links = @view.buildLinks()
