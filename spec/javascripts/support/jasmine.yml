@@ -1,0 +1,17 @@
+src_files:
+  - "spec/javascripts/support/jquery.js"
+  - "spec/javascripts/support/jquery-jasmine.js"
+  - "spec/javascripts/helpers/spec_helper.coffee"
+  - "src/**/*.coffee"
+
+helpers:
+  - "spec/javascripts/helpers/**/*.coffee"
+  - "spec/javascripts/helpers/**/*.js"
+
+spec_files:
+  - /**/*_spec.coffee
+  - /**/*_spec.js
+
+src_dir: "./"
+
+spec_dir: spec/javascripts
