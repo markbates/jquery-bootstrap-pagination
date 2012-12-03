@@ -21,9 +21,14 @@
 
         defaults = {
           current_page: 1,
-          total_pages: 1
+          total_pages: 1,
+          next: "&gt;",
+          prev: "&lt;"
         };
         this.settings = $.extend(defaults, options);
+        if (typeof console !== "undefined" && console !== null) {
+          console.log("@settings", this.settings);
+        }
         $("a", this.el).live("click", this.clicked);
         this.el.data("paginationView", this);
       }
@@ -32,7 +37,7 @@
         var current_page, links, page, _i, _len, _ref;
         current_page = this.settings.current_page;
         links = [];
-        if ((this.settings.prev != null) && current_page !== 1) {
+        if (this.settings.prev) {
           links.push(this.buildLi(current_page - 1, this.settings.prev));
         }
         _ref = this.pages();
@@ -40,7 +45,7 @@
           page = _ref[_i];
           links.push(this.buildLi(page, page));
         }
-        if ((this.settings.next != null) && current_page !== this.settings.total_pages) {
+        if (this.settings.next) {
           links.push(this.buildLi(current_page + 1, this.settings.next));
         }
         return links;
@@ -111,7 +116,9 @@
         html.push("</div>");
         this.el.html(html.join("\n"));
         $("[data-page=" + this.settings.current_page + "]", this.el).closest("li").addClass("active");
-        return $("[data-page='..']", this.el).closest("li").addClass("disabled");
+        $("[data-page='..']", this.el).closest("li").addClass("disabled");
+        $("[data-page='0']", this.el).closest("li").addClass("disabled");
+        return $("[data-page='" + (this.settings.total_pages + 1) + "']", this.el).closest("li").addClass("disabled");
       };
 
       PaginationView.prototype.clicked = function(event) {
@@ -129,7 +136,7 @@
     })();
     return $.fn.pagination = function(options) {
       return this.each(function() {
-        return new PaginationView($(this), options);
+        return new PaginationView($(this), options).render();
       });
     };
   })(jQuery);

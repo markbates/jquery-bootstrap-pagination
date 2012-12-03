@@ -6,18 +6,21 @@
       defaults =
         current_page: 1
         total_pages: 1
+        next: "&gt;"
+        prev: "&lt;"
       @settings = $.extend(defaults, options)
+      console?.log """@settings""", @settings
       $("a", @el).live "click", @clicked
       @el.data("paginationView", @)
 
     buildLinks: =>
       current_page = @settings.current_page
       links = []
-      if @settings.prev? and current_page isnt 1
+      if @settings.prev
         links.push @buildLi((current_page - 1), @settings.prev)
       for page in @pages()
         links.push @buildLi(page, page)
-      if @settings.next? and current_page isnt @settings.total_pages
+      if @settings.next
         links.push @buildLi((current_page + 1), @settings.next)
       return links
 
@@ -60,6 +63,8 @@
       @el.html(html.join("\n"))
       $("[data-page=#{@settings.current_page}]", @el).closest("li").addClass("active")
       $("[data-page='..']", @el).closest("li").addClass("disabled")
+      $("[data-page='0']", @el).closest("li").addClass("disabled")
+      $("[data-page='#{@settings.total_pages + 1}']", @el).closest("li").addClass("disabled")
 
     clicked: (event) =>
       page = $(event.target).attr("data-page")
@@ -70,6 +75,6 @@
 
   $.fn.pagination = (options) ->
     return @each ->
-      new PaginationView($(@), options)
+      new PaginationView($(@), options).render()
 
 )(jQuery)

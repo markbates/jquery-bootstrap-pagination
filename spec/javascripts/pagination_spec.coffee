@@ -4,7 +4,7 @@ describe "pagination", ->
     $("#jasmine").remove()
     $("body").append("<div id='jasmine'></div>")
     @page = $("#jasmine")
-    @view = @page.pagination(total: 60, total_pages: 3).data("paginationView")
+    @view = @page.pagination(total: 60, total_pages: 3, next: false, prev: false).data("paginationView")
 
   describe "buildLinks", ->
     
