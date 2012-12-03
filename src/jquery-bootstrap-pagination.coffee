@@ -9,7 +9,7 @@
         next: "&gt;"
         prev: "&lt;"
       @settings = $.extend(defaults, options)
-      console?.log """@settings""", @settings
+      # console?.log """@settings""", @settings
       $("a", @el).live "click", @clicked
       @el.data("paginationView", @)
 
@@ -54,7 +54,7 @@
       return pages
 
     render: =>
-      html = ["<div class='pagination'>"]
+      html = ["<div class='jquery-bootstrap-pagination'>"]
       html.push "<ul>"
       for link in @buildLinks()
         html.push link

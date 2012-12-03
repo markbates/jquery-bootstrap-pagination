@@ -26,9 +26,6 @@
           prev: "&lt;"
         };
         this.settings = $.extend(defaults, options);
-        if (typeof console !== "undefined" && console !== null) {
-          console.log("@settings", this.settings);
-        }
         $("a", this.el).live("click", this.clicked);
         this.el.data("paginationView", this);
       }
