@@ -137,7 +137,7 @@
           this.el.html("");
           return;
         }
-        html = ["<div class='jquery-bootstrap-pagination'>"];
+        html = ["<div class='jquery-bootstrap-pagination pagination'>"];
         html.push("<ul>");
         _ref = this.buildLinks();
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
