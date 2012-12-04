@@ -84,7 +84,7 @@ describe "pagination", ->
     it "renders the pagination HTML to the el", ->
       @view.render()
       expect(@page.html()).toEqual("""
-        <div class="jquery-bootstrap-pagination">
+        <div class="jquery-bootstrap-pagination pagination">
         <ul>
         <li class="active"><a href="#" data-page="1">1</a></li>
         <li><a href="#" data-page="2">2</a></li>
@@ -103,7 +103,7 @@ describe "pagination", ->
       @view.settings.current_page = 2
       @view.render()
       expect(@page.html()).toEqual("""
-        <div class="jquery-bootstrap-pagination">
+        <div class="jquery-bootstrap-pagination pagination">
         <ul>
         <li><a href="#" data-page="1">1</a></li>
         <li class="active"><a href="#" data-page="2">2</a></li>
@@ -118,7 +118,7 @@ describe "pagination", ->
       @view.settings.current_page = 1
       @view.render()
       expect(@page.html()).toEqual("""
-        <div class="jquery-bootstrap-pagination">
+        <div class="jquery-bootstrap-pagination pagination">
         <ul>
         <li class="disabled"><a href="#" data-page="1">first</a></li>
         <li class="active"><a href="#" data-page="1">1</a></li>
@@ -135,7 +135,7 @@ describe "pagination", ->
       @view.settings.current_page = @view.settings.total_pages
       @view.render()
       expect(@page.html()).toEqual("""
-        <div class="jquery-bootstrap-pagination">
+        <div class="jquery-bootstrap-pagination pagination">
         <ul>
         <li><a href="#" data-page="1">first</a></li>
         <li><a href="#" data-page="1">1</a></li>
@@ -151,7 +151,7 @@ describe "pagination", ->
       @view.settings.current_page = 2
       @view.render()
       expect(@page.html()).toEqual("""
-        <div class="jquery-bootstrap-pagination">
+        <div class="jquery-bootstrap-pagination pagination">
         <ul>
         <li><a href="#" data-page="1">1</a></li>
         <li class="active"><a href="#" data-page="2">2</a></li>
@@ -172,7 +172,7 @@ describe "pagination", ->
       @view.settings.current_page = 2
       @view.render()
       expect(@page.html()).toEqual("""
-        <div class="jquery-bootstrap-pagination">
+        <div class="jquery-bootstrap-pagination pagination">
         <ul>
         <li><a href="#" data-page="1">1</a></li>
         <li class="active"><a href="#" data-page="2">2</a></li>
@@ -193,7 +193,7 @@ describe "pagination", ->
       @view.settings.current_page = 8
       @view.render()
       expect(@page.html()).toEqual("""
-        <div class="jquery-bootstrap-pagination">
+        <div class="jquery-bootstrap-pagination pagination">
         <ul>
         <li><a href="#" data-page="1">1</a></li>
         <li class="disabled"><a href="#" data-page="..">..</a></li>
@@ -219,7 +219,7 @@ describe "pagination", ->
       @view.settings.current_page = 2
       @view.render()
       expect(@page.html()).toEqual("""
-        <div class="jquery-bootstrap-pagination">
+        <div class="jquery-bootstrap-pagination pagination">
         <ul>
         <li><a href="#" data-page="1">1</a></li>
         <li class="active"><a href="#" data-page="2">2</a></li>
@@ -237,7 +237,7 @@ describe "pagination", ->
       $("[data-page=8]", @view.el).click()
       @view.render()
       expect(@page.html()).toEqual("""
-        <div class="jquery-bootstrap-pagination">
+        <div class="jquery-bootstrap-pagination pagination">
         <ul>
         <li><a href="#" data-page="1">1</a></li>
         <li class="disabled"><a href="#" data-page="..">..</a></li>

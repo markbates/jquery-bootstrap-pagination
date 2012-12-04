@@ -138,7 +138,7 @@
         @el.html("")
         return
       # render all of the pages:
-      html = ["<div class='jquery-bootstrap-pagination'>"]
+      html = ["<div class='jquery-bootstrap-pagination pagination'>"]
       html.push "<ul>"
       for link in @buildLinks()
         html.push link
