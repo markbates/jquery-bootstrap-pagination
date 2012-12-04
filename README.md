@@ -92,6 +92,8 @@ first: false
 last: false
 # how many links before truncation happens:
 display_max: 8
+# render nothing if there is only 1 page:
+ignore_single_page: true
 ```
 
 ## Contributing
