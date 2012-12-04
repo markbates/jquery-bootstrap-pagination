@@ -14,6 +14,16 @@ describe "pagination", ->
       expect(links[1]).toEqual("<li><a href='#' data-page='2'>2</a></li>")
       expect(links[2]).toEqual("<li><a href='#' data-page='3'>3</a></li>")
 
+    it "adds a first and last link", ->
+      @view.settings.first = "first"
+      @view.settings.last = "last"
+      links = @view.buildLinks()
+      expect(links[0]).toEqual("<li><a href='#' data-page='1'>first</a></li>")
+      expect(links[1]).toEqual("<li><a href='#' data-page='1'>1</a></li>")
+      expect(links[2]).toEqual("<li><a href='#' data-page='2'>2</a></li>")
+      expect(links[3]).toEqual("<li><a href='#' data-page='3'>3</a></li>")
+      expect(links[4]).toEqual("<li><a href='#' data-page='3'>last</a></li>")
+
     it "truncates links if there are too many", ->
       @view.settings.total_pages = 50
       @view.settings.current_page = 2
@@ -92,6 +102,40 @@ describe "pagination", ->
         <li><a href="#" data-page="1">1</a></li>
         <li class="active"><a href="#" data-page="2">2</a></li>
         <li><a href="#" data-page="3">3</a></li>
+        </ul>
+        </div>
+      """)
+
+    it "disables the first link if on page 1", ->
+      @view.settings.first = "first"
+      @view.settings.last = "last"
+      @view.settings.current_page = 1
+      @view.render()
+      expect(@page.html()).toEqual("""
+        <div class="jquery-bootstrap-pagination">
+        <ul>
+        <li class="disabled"><a href="#" data-page="1">first</a></li>
+        <li class="active"><a href="#" data-page="1">1</a></li>
+        <li><a href="#" data-page="2">2</a></li>
+        <li><a href="#" data-page="3">3</a></li>
+        <li><a href="#" data-page="3">last</a></li>
+        </ul>
+        </div>
+      """)
+
+    it "disables the last link if on the last page", ->
+      @view.settings.first = "first"
+      @view.settings.last = "last"
+      @view.settings.current_page = @view.settings.total_pages
+      @view.render()
+      expect(@page.html()).toEqual("""
+        <div class="jquery-bootstrap-pagination">
+        <ul>
+        <li><a href="#" data-page="1">first</a></li>
+        <li><a href="#" data-page="1">1</a></li>
+        <li><a href="#" data-page="2">2</a></li>
+        <li class="active"><a href="#" data-page="3">3</a></li>
+        <li class="disabled"><a href="#" data-page="3">last</a></li>
         </ul>
         </div>
       """)

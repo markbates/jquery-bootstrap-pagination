@@ -18,3 +18,4 @@ profile
 *.log.lck
 solr/
 .jhw-cache/
+jhw.*

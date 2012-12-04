@@ -3,8 +3,27 @@
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   (function($) {
+    /*
+      $(".my-pagination").pagination();
+    
+      $(".my-pagination").pagination({total_pages: 3, current_page: 1});
+    
+      $(".my-pagination").pagination({
+        total_pages: 3, 
+        current_page: 1,
+        callback: function(event, page) {
+          alert("Clicked: " + page);
+        }
+      });
+    */
+
     var PaginationView;
-    PaginationView = (function() {
+    $.fn.pagination = function(options) {
+      return this.each(function() {
+        return new PaginationView($(this), options).render();
+      });
+    };
+    return PaginationView = (function() {
 
       function PaginationView(el, options) {
         var defaults;
@@ -24,9 +43,9 @@
           total_pages: 1,
           next: "&gt;",
           prev: "&lt;",
-          display_max: 8,
           first: false,
-          last: false
+          last: false,
+          display_max: 8
         };
         this.settings = $.extend(defaults, options);
         $("a", this.el).live("click", this.clicked);
@@ -37,6 +56,9 @@
         var current_page, links, page, _i, _len, _ref;
         current_page = this.settings.current_page;
         links = [];
+        if (this.settings.first) {
+          links.push(this.buildLi(1, this.settings.first));
+        }
         if (this.settings.prev) {
           links.push(this.buildLi(current_page - 1, this.settings.prev));
         }
@@ -47,6 +69,9 @@
         }
         if (this.settings.next) {
           links.push(this.buildLi(current_page + 1, this.settings.next));
+        }
+        if (this.settings.last) {
+          links.push(this.buildLi(this.settings.total_pages, this.settings.last));
         }
         return links;
       };
@@ -120,27 +145,28 @@
         $("[data-page=" + this.settings.current_page + "]", this.el).closest("li").addClass("active");
         $("[data-page='..']", this.el).closest("li").addClass("disabled");
         $("[data-page='0']", this.el).closest("li").addClass("disabled");
-        return $("[data-page='" + (this.settings.total_pages + 1) + "']", this.el).closest("li").addClass("disabled");
+        $("[data-page='" + (this.settings.total_pages + 1) + "']", this.el).closest("li").addClass("disabled");
+        if (this.settings.current_page === 1 && this.settings.first) {
+          $("li:first", this.el).removeClass("active").addClass("disabled");
+        }
+        if (this.settings.current_page === this.settings.total_pages && this.settings.last) {
+          return $("li:last", this.el).removeClass("active").addClass("disabled");
+        }
       };
 
       PaginationView.prototype.clicked = function(event) {
         var page;
-        page = $(event.target).attr("data-page");
+        page = parseInt($(event.target).attr("data-page"));
         if (this.settings.callback != null) {
           this.settings.callback(event, page);
         }
-        this.settings.current_page = parseInt(page);
+        this.settings.current_page = page;
         return this.render();
       };
 
       return PaginationView;
 
     })();
-    return $.fn.pagination = function(options) {
-      return this.each(function() {
-        return new PaginationView($(this), options).render();
-      });
-    };
   })(jQuery);
 
 }).call(this);
