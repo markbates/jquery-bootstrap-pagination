@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["mark@markbates.com"]
   gem.description   = %q{A simple and clean pagination implementation for jQuery and Twitter Bootstrap.}
   gem.summary       = %q{A simple and clean pagination implementation for jQuery and Twitter Bootstrap.}
-  gem.homepage      = ""
+  gem.homepage      = "http://github.com/markbates/jquery-bootstrap-pagination"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
