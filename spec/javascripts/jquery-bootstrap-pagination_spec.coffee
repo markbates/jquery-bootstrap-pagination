@@ -93,6 +93,12 @@ describe "pagination", ->
         </div>
       """)
 
+    it "renders nothing if there is only 1 page", ->
+      @view.settings.total_pages = 1
+      @view.settings.current_page = 1
+      @view.render()
+      expect(@page.html()).toEqual("")
+
     it "adds 'active' to the current page", ->
       @view.settings.current_page = 2
       @view.render()

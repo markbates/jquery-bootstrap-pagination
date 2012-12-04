@@ -8,3 +8,4 @@ gem "guard-coffeescript"
 gem "guard-jasmine-headless-webkit"
 gem "jasmine"
 gem "jasmine-headless-webkit"
+gem 'rb-fsevent'

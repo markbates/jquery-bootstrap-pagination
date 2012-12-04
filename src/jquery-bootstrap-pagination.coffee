@@ -40,6 +40,8 @@
         last: false
         # how many links before truncation happens:
         display_max: 8
+        # render nothing if there is only 1 page:
+        ignore_single_page: true
 
       # merge defaults with passed in options:
       @settings = $.extend(defaults, options)
@@ -130,6 +132,12 @@
     # renders the pagination links to the element. the
     # element is cleared of all of it's HTML in this process.
     render: =>
+      # if there is only 1 page and the 'ignore_single_page' flag
+      # is 'true' then render nothing.
+      if @settings.total_pages is 1 and @settings.ignore_single_page
+        @el.html("")
+        return
+      # render all of the pages:
       html = ["<div class='jquery-bootstrap-pagination'>"]
       html.push "<ul>"
       for link in @buildLinks()

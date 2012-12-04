@@ -45,7 +45,8 @@
           prev: "&lt;",
           first: false,
           last: false,
-          display_max: 8
+          display_max: 8,
+          ignore_single_page: true
         };
         this.settings = $.extend(defaults, options);
         $("a", this.el).live("click", this.clicked);
@@ -132,6 +133,10 @@
 
       PaginationView.prototype.render = function() {
         var html, link, _i, _len, _ref;
+        if (this.settings.total_pages === 1 && this.settings.ignore_single_page) {
+          this.el.html("");
+          return;
+        }
         html = ["<div class='jquery-bootstrap-pagination'>"];
         html.push("<ul>");
         _ref = this.buildLinks();
