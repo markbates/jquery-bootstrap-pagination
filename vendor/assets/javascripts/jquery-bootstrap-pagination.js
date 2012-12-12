@@ -133,8 +133,8 @@
 
       PaginationView.prototype.render = function() {
         var html, link, _i, _len, _ref;
+        this.el.html("");
         if (this.settings.total_pages === 1 && this.settings.ignore_single_page) {
-          this.el.html("");
           return;
         }
         html = ["<div class='jquery-bootstrap-pagination pagination'>"];
