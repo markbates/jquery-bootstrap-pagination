@@ -90,7 +90,7 @@
         current_page = this.settings.current_page;
         pages = [];
         max = this.settings.display_max;
-        if (total_pages > 10) {
+        if (total_pages > max) {
           pages.push(1);
           if (current_page > max - 1) {
             pages.push("..");
