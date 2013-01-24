@@ -90,7 +90,7 @@
       pages = []
       max = @settings.display_max
       # if there are more than 10 total pages let's build the list:
-      if total_pages > 10
+      if total_pages > max
         # add page 1:
         pages.push 1
         # add truncation if the current page is greater than
