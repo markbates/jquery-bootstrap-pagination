@@ -7,7 +7,7 @@
   $(".my-pagination").pagination({total_pages: 3, current_page: 1});
 
   $(".my-pagination").pagination({
-    total_pages: 3, 
+    total_pages: 3,
     current_page: 1,
     callback: function(event, page) {
       alert("Clicked: " + page);
