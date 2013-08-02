@@ -163,9 +163,15 @@
       if @settings.current_page is @settings.total_pages and @settings.last
         $("li:last", @el).removeClass("active").addClass("disabled")
 
+    isValidPage: (page) =>
+      page > 0 and \
+        page isnt @settings.current_page and \
+        page <= @settings.total_pages
+
     # called when a link is clicked in the pagination list:
     clicked: (event) =>
       page = parseInt($(event.target).attr("data-page"))
+      return unless @isValidPage(page)
       # if there is a callback registered, then call it
       # passing the original event and the page number that was clicked:
       if @settings.callback?

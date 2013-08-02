@@ -30,6 +30,7 @@
 
         this.el = el;
         this.clicked = __bind(this.clicked, this);
+        this.isValidPage = __bind(this.isValidPage, this);
         this.render = __bind(this.render, this);
         this.pages = __bind(this.pages, this);
         this.buildLi = __bind(this.buildLi, this);
@@ -162,10 +163,17 @@
         }
       };
 
+      PaginationView.prototype.isValidPage = function(page) {
+        return page > 0 && page !== this.settings.current_page && page <= this.settings.total_pages;
+      };
+
       PaginationView.prototype.clicked = function(event) {
         var page;
 
         page = parseInt($(event.target).attr("data-page"));
+        if (!this.isValidPage(page)) {
+          return;
+        }
         if (this.settings.callback != null) {
           this.settings.callback(event, page);
         }
