@@ -94,6 +94,8 @@ last: false
 display_max: 8
 # render nothing if there is only 1 page:
 ignore_single_page: true
+# disable turbolinks:
+no_turbolink: false
 ```
 
 ## Contributing

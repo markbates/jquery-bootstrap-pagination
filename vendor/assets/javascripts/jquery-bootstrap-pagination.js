@@ -29,9 +29,12 @@
         var defaults;
 
         this.el = el;
+        this.change = __bind(this.change, this);
         this.clicked = __bind(this.clicked, this);
+        this.isValidPage = __bind(this.isValidPage, this);
         this.render = __bind(this.render, this);
         this.pages = __bind(this.pages, this);
+        this.buildLink = __bind(this.buildLink, this);
         this.buildLi = __bind(this.buildLi, this);
         this.buildLinks = __bind(this.buildLinks, this);
         defaults = {
@@ -42,7 +45,8 @@
           first: false,
           last: false,
           display_max: 8,
-          ignore_single_page: true
+          ignore_single_page: true,
+          no_turbolink: false
         };
         this.settings = $.extend(defaults, options);
         if ($(document).on) {
@@ -82,7 +86,21 @@
         if (text == null) {
           text = page;
         }
-        return "<li><a href='#' data-page='" + page + "'>" + text + "</a></li>";
+        return "<li>" + (this.buildLink(page, text)) + "</li>";
+      };
+
+      PaginationView.prototype.buildLink = function(page, text) {
+        var data_attr;
+
+        if (text == null) {
+          text = page;
+        }
+        if (this.settings.no_turbolink) {
+          data_attr = " data-no-turbolink='1'";
+        } else {
+          data_attr = "";
+        }
+        return "<a href='#' data-page='" + page + "'" + data_attr + ">" + text + "</a>";
       };
 
       PaginationView.prototype.pages = function() {
@@ -162,12 +180,27 @@
         }
       };
 
+      PaginationView.prototype.isValidPage = function(page) {
+        return page > 0 && page !== this.settings.current_page && page <= this.settings.total_pages;
+      };
+
       PaginationView.prototype.clicked = function(event) {
         var page;
 
         page = parseInt($(event.target).attr("data-page"));
+        if (!this.isValidPage(page)) {
+          return;
+        }
         if (this.settings.callback != null) {
           this.settings.callback(event, page);
+        }
+        return this.change(page);
+      };
+
+      PaginationView.prototype.change = function(page) {
+        page = parseInt(page);
+        if (!this.isValidPage(page)) {
+          return;
         }
         this.settings.current_page = page;
         return this.render();

@@ -42,6 +42,8 @@
         display_max: 8
         # render nothing if there is only 1 page:
         ignore_single_page: true
+        # disable turbolinks
+        no_turbolink: false
 
       # merge defaults with passed in options:
       @settings = $.extend(defaults, options)
@@ -83,8 +85,16 @@
       return links
 
     # build the `li` element for the link:
-    buildLi: (page, text = page)=>
-      "<li><a href='#' data-page='#{page}'>#{text}</a></li>"
+    buildLi: (page, text = page) =>
+      "<li>#{@buildLink(page, text)}</li>"
+
+    # build the link element
+    buildLink: (page, text = page) =>
+      if @settings.no_turbolink
+        data_attr = " data-no-turbolink='1'"
+      else
+        data_attr = ""
+      "<a href='#' data-page='#{page}'#{data_attr}>#{text}</a>"
 
     # returns an array of all of the 'pages' in the pagination:
     pages: =>
@@ -163,16 +173,28 @@
       if @settings.current_page is @settings.total_pages and @settings.last
         $("li:last", @el).removeClass("active").addClass("disabled")
 
+    isValidPage: (page) =>
+      page > 0 and \
+        page isnt @settings.current_page and \
+        page <= @settings.total_pages
+
     # called when a link is clicked in the pagination list:
     clicked: (event) =>
       page = parseInt($(event.target).attr("data-page"))
+      return unless @isValidPage(page)
       # if there is a callback registered, then call it
       # passing the original event and the page number that was clicked:
       if @settings.callback?
         @settings.callback(event, page)
+      @change(page)
+
+    change: (page) =>
+      page = parseInt(page)
+      return unless @isValidPage(page)
       # set the current page to the clicked page:
       @settings.current_page = page
       # re-render the pagination information to reflect the newly
-      # clicked page:
+      # current page:
       @render()
+
 )(jQuery)
