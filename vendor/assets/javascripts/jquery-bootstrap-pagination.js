@@ -29,6 +29,7 @@
         var defaults;
 
         this.el = el;
+        this.change = __bind(this.change, this);
         this.clicked = __bind(this.clicked, this);
         this.isValidPage = __bind(this.isValidPage, this);
         this.render = __bind(this.render, this);
@@ -176,6 +177,14 @@
         }
         if (this.settings.callback != null) {
           this.settings.callback(event, page);
+        }
+        return this.change(page);
+      };
+
+      PaginationView.prototype.change = function(page) {
+        page = parseInt(page);
+        if (!this.isValidPage(page)) {
+          return;
         }
         this.settings.current_page = page;
         return this.render();

@@ -176,9 +176,15 @@
       # passing the original event and the page number that was clicked:
       if @settings.callback?
         @settings.callback(event, page)
+      @change(page)
+
+    change: (page) =>
+      page = parseInt(page)
+      return unless @isValidPage(page)
       # set the current page to the clicked page:
       @settings.current_page = page
       # re-render the pagination information to reflect the newly
-      # clicked page:
+      # current page:
       @render()
+
 )(jQuery)
