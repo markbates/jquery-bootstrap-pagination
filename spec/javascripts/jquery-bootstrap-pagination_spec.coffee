@@ -78,6 +78,12 @@ describe "pagination", ->
       expect(links[2]).toEqual("<li><a href='#' data-page='2'>2</a></li>")
       expect(links[3]).toEqual("<li><a href='#' data-page='3'>3</a></li>")
       
+    it "disables turbolinks (if requested)", ->
+      @view.settings.prev = "prev"
+      @view.settings.current_page = 2
+      @view.settings.no_turbolink = true
+      links = @view.buildLinks()
+      expect(links[0]).toEqual("<li><a href='#' data-page='1' data-no-turbolink='1'>prev</a></li>")
 
   describe "render", ->
     

@@ -42,6 +42,8 @@
         display_max: 8
         # render nothing if there is only 1 page:
         ignore_single_page: true
+        # disable turbolinks
+        no_turbolink: false
 
       # merge defaults with passed in options:
       @settings = $.extend(defaults, options)
@@ -83,8 +85,16 @@
       return links
 
     # build the `li` element for the link:
-    buildLi: (page, text = page)=>
-      "<li><a href='#' data-page='#{page}'>#{text}</a></li>"
+    buildLi: (page, text = page) =>
+      "<li>#{@buildLink(page, text)}</li>"
+
+    # build the link element
+    buildLink: (page, text = page) =>
+      if @settings.no_turbolink
+        data_attr = " data-no-turbolink='1'"
+      else
+        data_attr = ""
+      "<a href='#' data-page='#{page}'#{data_attr}>#{text}</a>"
 
     # returns an array of all of the 'pages' in the pagination:
     pages: =>
