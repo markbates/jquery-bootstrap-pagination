@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jquery-bootstrap-pagination (1.0.4)
+    jquery-bootstrap-pagination (1.1.0)
 
 GEM
   remote: https://rubygems.org/
