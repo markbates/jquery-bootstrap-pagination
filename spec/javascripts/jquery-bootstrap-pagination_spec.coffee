@@ -78,6 +78,12 @@ describe "pagination", ->
       expect(links[2]).toEqual("<li><a href='#' data-page='2'>2</a></li>")
       expect(links[3]).toEqual("<li><a href='#' data-page='3'>3</a></li>")
       
+    it "disables turbolinks (if requested)", ->
+      @view.settings.prev = "prev"
+      @view.settings.current_page = 2
+      @view.settings.no_turbolink = true
+      links = @view.buildLinks()
+      expect(links[0]).toEqual("<li><a href='#' data-page='1' data-no-turbolink='1'>prev</a></li>")
 
   describe "render", ->
     
@@ -250,6 +256,164 @@ describe "pagination", ->
         <li><a href="#" data-page="10">10</a></li>
         <li><a href="#" data-page="11">11</a></li>
         <li><a href="#" data-page="12">12</a></li>
+        <li class="disabled"><a href="#" data-page="..">..</a></li>
+        <li><a href="#" data-page="50">50</a></li>
+        </ul>
+        </div>
+      """)
+
+
+  describe "change", ->
+
+    it "re-renders the pagination links", ->
+      @view.settings.total_pages = 50
+      @view.settings.current_page = 2
+      @view.render()
+      expect(@page.html()).toEqual("""
+        <div class="jquery-bootstrap-pagination pagination">
+        <ul>
+        <li><a href="#" data-page="1">1</a></li>
+        <li class="active"><a href="#" data-page="2">2</a></li>
+        <li><a href="#" data-page="3">3</a></li>
+        <li><a href="#" data-page="4">4</a></li>
+        <li><a href="#" data-page="5">5</a></li>
+        <li><a href="#" data-page="6">6</a></li>
+        <li><a href="#" data-page="7">7</a></li>
+        <li><a href="#" data-page="8">8</a></li>
+        <li class="disabled"><a href="#" data-page="..">..</a></li>
+        <li><a href="#" data-page="50">50</a></li>
+        </ul>
+        </div>
+      """)
+      @view.change(8)
+      expect(@page.html()).toEqual("""
+        <div class="jquery-bootstrap-pagination pagination">
+        <ul>
+        <li><a href="#" data-page="1">1</a></li>
+        <li class="disabled"><a href="#" data-page="..">..</a></li>
+        <li><a href="#" data-page="4">4</a></li>
+        <li><a href="#" data-page="5">5</a></li>
+        <li><a href="#" data-page="6">6</a></li>
+        <li><a href="#" data-page="7">7</a></li>
+        <li class="active"><a href="#" data-page="8">8</a></li>
+        <li><a href="#" data-page="9">9</a></li>
+        <li><a href="#" data-page="10">10</a></li>
+        <li><a href="#" data-page="11">11</a></li>
+        <li><a href="#" data-page="12">12</a></li>
+        <li class="disabled"><a href="#" data-page="..">..</a></li>
+        <li><a href="#" data-page="50">50</a></li>
+        </ul>
+        </div>
+      """)
+
+    it "doesn't re-render if page > total_pages (invalid)", ->
+      @view.settings.total_pages = 50
+      @view.settings.current_page = 2
+      @view.render()
+      expect(@page.html()).toEqual("""
+        <div class="jquery-bootstrap-pagination pagination">
+        <ul>
+        <li><a href="#" data-page="1">1</a></li>
+        <li class="active"><a href="#" data-page="2">2</a></li>
+        <li><a href="#" data-page="3">3</a></li>
+        <li><a href="#" data-page="4">4</a></li>
+        <li><a href="#" data-page="5">5</a></li>
+        <li><a href="#" data-page="6">6</a></li>
+        <li><a href="#" data-page="7">7</a></li>
+        <li><a href="#" data-page="8">8</a></li>
+        <li class="disabled"><a href="#" data-page="..">..</a></li>
+        <li><a href="#" data-page="50">50</a></li>
+        </ul>
+        </div>
+      """)
+      @view.change(51)
+      expect(@page.html()).toEqual("""
+        <div class="jquery-bootstrap-pagination pagination">
+        <ul>
+        <li><a href="#" data-page="1">1</a></li>
+        <li class="active"><a href="#" data-page="2">2</a></li>
+        <li><a href="#" data-page="3">3</a></li>
+        <li><a href="#" data-page="4">4</a></li>
+        <li><a href="#" data-page="5">5</a></li>
+        <li><a href="#" data-page="6">6</a></li>
+        <li><a href="#" data-page="7">7</a></li>
+        <li><a href="#" data-page="8">8</a></li>
+        <li class="disabled"><a href="#" data-page="..">..</a></li>
+        <li><a href="#" data-page="50">50</a></li>
+        </ul>
+        </div>
+      """)
+
+    it "doesn't re-render if page < 1 (invalid)", ->
+      @view.settings.total_pages = 50
+      @view.settings.current_page = 2
+      @view.render()
+      expect(@page.html()).toEqual("""
+        <div class="jquery-bootstrap-pagination pagination">
+        <ul>
+        <li><a href="#" data-page="1">1</a></li>
+        <li class="active"><a href="#" data-page="2">2</a></li>
+        <li><a href="#" data-page="3">3</a></li>
+        <li><a href="#" data-page="4">4</a></li>
+        <li><a href="#" data-page="5">5</a></li>
+        <li><a href="#" data-page="6">6</a></li>
+        <li><a href="#" data-page="7">7</a></li>
+        <li><a href="#" data-page="8">8</a></li>
+        <li class="disabled"><a href="#" data-page="..">..</a></li>
+        <li><a href="#" data-page="50">50</a></li>
+        </ul>
+        </div>
+      """)
+      @view.change(0)
+      expect(@page.html()).toEqual("""
+        <div class="jquery-bootstrap-pagination pagination">
+        <ul>
+        <li><a href="#" data-page="1">1</a></li>
+        <li class="active"><a href="#" data-page="2">2</a></li>
+        <li><a href="#" data-page="3">3</a></li>
+        <li><a href="#" data-page="4">4</a></li>
+        <li><a href="#" data-page="5">5</a></li>
+        <li><a href="#" data-page="6">6</a></li>
+        <li><a href="#" data-page="7">7</a></li>
+        <li><a href="#" data-page="8">8</a></li>
+        <li class="disabled"><a href="#" data-page="..">..</a></li>
+        <li><a href="#" data-page="50">50</a></li>
+        </ul>
+        </div>
+      """)
+
+    it "doesn't re-render if there's no change in page", ->
+      @view.settings.total_pages = 50
+      @view.settings.current_page = 2
+      @view.render()
+      expect(@page.html()).toEqual("""
+        <div class="jquery-bootstrap-pagination pagination">
+        <ul>
+        <li><a href="#" data-page="1">1</a></li>
+        <li class="active"><a href="#" data-page="2">2</a></li>
+        <li><a href="#" data-page="3">3</a></li>
+        <li><a href="#" data-page="4">4</a></li>
+        <li><a href="#" data-page="5">5</a></li>
+        <li><a href="#" data-page="6">6</a></li>
+        <li><a href="#" data-page="7">7</a></li>
+        <li><a href="#" data-page="8">8</a></li>
+        <li class="disabled"><a href="#" data-page="..">..</a></li>
+        <li><a href="#" data-page="50">50</a></li>
+        </ul>
+        </div>
+      """)
+      @view.change(2)
+      expect(@page.html()).toEqual("""
+        <div class="jquery-bootstrap-pagination pagination">
+        <ul>
+        <li><a href="#" data-page="1">1</a></li>
+        <li class="active"><a href="#" data-page="2">2</a></li>
+        <li><a href="#" data-page="3">3</a></li>
+        <li><a href="#" data-page="4">4</a></li>
+        <li><a href="#" data-page="5">5</a></li>
+        <li><a href="#" data-page="6">6</a></li>
+        <li><a href="#" data-page="7">7</a></li>
+        <li><a href="#" data-page="8">8</a></li>
         <li class="disabled"><a href="#" data-page="..">..</a></li>
         <li><a href="#" data-page="50">50</a></li>
         </ul>
