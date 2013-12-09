@@ -100,7 +100,7 @@
         } else {
           data_attr = "";
         }
-        return "<a href='#' data-page='" + page + "'" + data_attr + ">" + text + "</a>";
+        return "<a href='javascript:void(0)' data-page='" + page + "'" + data_attr + ">" + text + "</a>";
       };
 
       PaginationView.prototype.pages = function() {
@@ -159,7 +159,7 @@
           return;
         }
         html = ["<div class='jquery-bootstrap-pagination pagination'>"];
-        html.push("<ul>");
+        html.push("<ul class='pagination'>");
         _ref = this.buildLinks();
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           link = _ref[_i];
