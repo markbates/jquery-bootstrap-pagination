@@ -1,0 +1,25 @@
+{
+  "name": "jquery-bootstrap-pagination",
+  "version": "1.2.0",
+  "homepage": "https://github.com/markbates/jquery-bootstrap-pagination",
+  "authors": [
+    "mark+github@markbates.com"
+  ],
+  "description": "A simple, full-featured, pagination system for jQuery that outputs Twitter Bootstrap marked up pagination links.",
+  "main": "vendor/assets/javascripts/jquery-bootstrap-pagination.js",
+  "keywords": [
+    "bootstrap",
+    "pagination",
+    "javascript",
+    "coffeescript",
+    "rails"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
