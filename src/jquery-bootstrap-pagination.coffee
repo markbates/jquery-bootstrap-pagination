@@ -151,8 +151,8 @@
       if @settings.total_pages is 1 and @settings.ignore_single_page
         return
       # render all of the pages:
-      html = ["<div class='jquery-bootstrap-pagination pagination'>"]
-      html.push "<ul>"
+      html = ["<div class='jquery-bootstrap-pagination'>"]
+      html.push "<ul class='pagination'>"
       for link in @buildLinks()
         html.push link
       html.push "</ul>"
