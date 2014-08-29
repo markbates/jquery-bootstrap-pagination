@@ -158,8 +158,8 @@
         if (this.settings.total_pages === 1 && this.settings.ignore_single_page) {
           return;
         }
-        html = ["<div class='jquery-bootstrap-pagination pagination'>"];
-        html.push("<ul>");
+        html = ["<div class='jquery-bootstrap-pagination'>"];
+        html.push("<ul class='pagination'>");
         _ref = this.buildLinks();
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           link = _ref[_i];
