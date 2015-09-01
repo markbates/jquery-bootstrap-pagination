@@ -185,6 +185,8 @@
       };
 
       PaginationView.prototype.clicked = function(event) {
+      	// Prevents all event except a click event.
+        event.preventDefault();
         var page;
 
         page = parseInt($(event.target).attr("data-page"));
