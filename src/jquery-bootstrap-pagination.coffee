@@ -50,6 +50,7 @@
 
       # add a click handler event to the view:
       if $(document).on
+        $(@el).unbind()
         $(@el).on("click", "a", @clicked)
       else
         $("a", @el).live("click", @clicked)
@@ -180,6 +181,8 @@
 
     # called when a link is clicked in the pagination list:
     clicked: (event) =>
+      event.preventDefault()
+			event.stopImmediatePropagation()
       page = parseInt($(event.target).attr("data-page"))
       return unless @isValidPage(page)
       # if there is a callback registered, then call it
