@@ -180,6 +180,7 @@
 
     # called when a link is clicked in the pagination list:
     clicked: (event) =>
+      event.preventDefault()
       page = parseInt($(event.target).attr("data-page"))
       return unless @isValidPage(page)
       # if there is a callback registered, then call it
