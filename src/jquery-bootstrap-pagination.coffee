@@ -47,6 +47,7 @@
 
       # merge defaults with passed in options:
       @settings = $.extend(defaults, options)
+      @settings.total_pages = Math.max(1, @settings.total_pages)
 
       # add a click handler event to the view:
       if $(document).on
