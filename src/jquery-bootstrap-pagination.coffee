@@ -119,7 +119,7 @@
         # else if the current page is greater than the maximum display then
         # show pages on both side of the current page:
         else if current_page > max - 1
-          buf = max / 2
+          buf = Math.ceil(max / 2)
           pages.push page for page in [(current_page - buf)..(current_page + buf)]
         # else if the current page is less than or equal to the sub max then only
         # show from 2 to the max page.
